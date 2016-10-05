@@ -29,7 +29,7 @@ function getSongs(){
       songs.forEach(function(song){
         var $li = $('<li></li>');
         $li.append('<p>' + song.title + '</p>');
-        $li.append('<p>by: ' + song.artist + '</p>');
+        $li.append('<p>by: ' + song.artist + '<p>');
         $('#songs').append($li);
       });
     }
