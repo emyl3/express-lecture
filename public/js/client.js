@@ -13,8 +13,14 @@ $(function(){
       type: 'POST',
       url: '/songs',
       data: formData,
-      success: getSongs
-    });
+      statusCode: {
+        400: function(){
+          alert('The submission was a duplicate submission or contained an empty form field.');
+        }
+      },
+      success: getSongs,
+      }
+    );
     $(this).find('input[type=text]').val('');
   });
 });
@@ -30,6 +36,7 @@ function getSongs(){
         var $li = $('<li></li>');
         $li.append('<p>' + song.title + '</p>');
         $li.append('<p>by: ' + song.artist + '<p>');
+        $li.append('<p>date added: ' + song.dateAdded + '</p>');
         $('#songs').append($li);
       });
     }

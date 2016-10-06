@@ -4,15 +4,7 @@ var path = require('path'); //already exists on node so no npm install
 
 var app = express();
 
-//returns a function that knows how to take ANY request and finds any bodyencoded things
-//and returns a javascript
-//use applies to EVERY request
-app.use(bodyParser.urlencoded({extended: true})); //post requests need to come after this body parser
-
-// app.use(function(req, res, next){
-//   console.log('Got a request!');
-//   next();
-// });
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/', function(req, res){
   console.log('req body =', req.body);
@@ -31,6 +23,8 @@ console.log('filename', filename);
 
 var songs = [];
 app.post('/songs', function(req, res){
+var date = new Date();
+req.body.dateAdded = date.toDateString();
 var x;
   if(req.body.title === '' || req.body.artist ===''){
     x = false;
@@ -47,7 +41,7 @@ var x;
     }
   });
   if(x === false){
-    res.sendStatus(400);
+    res.sendStatus(400).send('bad request');
   }
   else{
   songs.push(req.body);
