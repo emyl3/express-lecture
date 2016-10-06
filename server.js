@@ -12,6 +12,8 @@ var app = express();
 //and returns a javascript
 //use applies to EVERY request
 app.use(bodyParser.urlencoded({extended: true})); //post requests need to come after this body parser
+//takes anything inside this folder and makes it publicly available
+app.use(express.static('public'));
 
 //for any request that starts with the /songs use the songRouter
 //once something is matched in the first param it doesn't have to be matched in the router
@@ -51,9 +53,6 @@ app.get('/kittens', function(req, res) {
 //middleware for serving static files
 //static files are files/assets that have content that doesn't change while the server is running
 //all the stuff we need to see the client side
-
-//takes anything inside this folder and makes it publicly available
-app.use(express.static('public'));
 
 //how we turn the server on
 app.listen(3000);
