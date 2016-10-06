@@ -54,7 +54,6 @@ var x;
   console.log('songs arary:', songs);
   res.sendStatus(200);
 }
-
 });
 
 app.get('/songs', function(req, res){
