@@ -29,26 +29,32 @@ res.sendFile(filename);
 console.log('filename', filename);
 });
 
-//have to do curl localhost:3000/kittens
-app.get('/kittens', function(req, res) {
-  //request has a query object that looks like what you put in after the url
-  //ex 'localhost:3000/kittens?name=simone&age=2'
-  // that would return { name: 'simone', age: '2'};
-  console.log('Query params:', req.query);
-  if(req.query.age > 2){
-    res.send('MEOW');
-  } else {
-    res.send('meow');
-  }
-  res.send('meow');
-});
-
 var songs = [];
 app.post('/songs', function(req, res){
-  console.log('req.body:', req.body);
+var x;
+  if(req.body.title === '' || req.body.artist ===''){
+    x = false;
+  }
+  songs.forEach(function(entry){
+    var songTitle;
+    var songArtist;
+    songTitle = entry.title;
+    songArtist = entry.artist;
+    console.log('title', songTitle);
+    console.log('artist', songArtist);
+    if(songTitle === req.body.title && songArtist == req.body.artist){
+      x = false;
+    }
+  });
+  if(x === false){
+    res.sendStatus(400);
+  }
+  else{
   songs.push(req.body);
-  console.log('songs', songs);
+  console.log('songs arary:', songs);
   res.sendStatus(200);
+}
+
 });
 
 app.get('/songs', function(req, res){
