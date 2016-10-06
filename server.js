@@ -1,6 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path'); //already exists on node so no npm install
+//when we require a file it means from our current directory (.) find a directory called routes
+//then find the songs file and run it
+//anything we write ourselves we use ./
+var songRouter = require('./routes/songs');
 
 var app = express();
 
@@ -9,10 +13,10 @@ var app = express();
 //use applies to EVERY request
 app.use(bodyParser.urlencoded({extended: true})); //post requests need to come after this body parser
 
-// app.use(function(req, res, next){
-//   console.log('Got a request!');
-//   next();
-// });
+//for any request that starts with the /songs use the songRouter
+//once something is matched in the first param it doesn't have to be matched in the router
+app.use('/songs', songRouter);
+
 
 app.post('/', function(req, res){
   console.log('req body =', req.body);
@@ -41,18 +45,6 @@ app.get('/kittens', function(req, res) {
     res.send('meow');
   }
   res.send('meow');
-});
-
-var songs = [];
-app.post('/songs', function(req, res){
-  console.log('req.body:', req.body);
-  songs.push(req.body);
-  console.log('songs', songs);
-  res.sendStatus(200);
-});
-
-app.get('/songs', function(req, res){
-  res.send(songs);
 });
 
 //path inside static is relative to where you started npm
