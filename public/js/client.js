@@ -13,6 +13,7 @@ $(function(){
       type: 'POST',
       url: '/songs',
       data: formData,
+      //or you can use error: also order doesn't matter!!!
       statusCode: {
         400: function(){
           alert('The submission was a duplicate submission or contained an empty form field.');
